@@ -33,9 +33,14 @@ const routes = [
     component: UserProfile
   },
   {
-    path: '/notfound',
-    name: 'notfound',
+    path: '/404',
+    name: '404',
     component: NotFound
+  },
+  {
+    path:'/:catchAll(.*)',
+    name:'notfound',
+    component:NotFound
   }
 ]
 
