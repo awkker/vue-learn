@@ -1,10 +1,10 @@
 <template>
     <div class="userlist">
         <content>
-            <div class="card" v-for="user in users" :key="user.id"> 
+            <div class="card" v-for="user in users" :key="user.id" @click="open_user_profile(user.id)"> 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-1">
+                        <div class="col-1 img-field">
                             <img :src="user.photo" class="img-fluid" alt="">
                         </div>
                         <div class="col-11">
@@ -23,13 +23,15 @@
 import content from '../components/content.vue'
 import $ from 'jquery'
 import { ref } from 'vue'
-
+import router from '../router/index';
+import { useStore } from 'vuex';
 export default {
     name: 'userlist',
     components: {
         content
     },
     setup(){
+        const store = useStore();
         let users=ref([]);
 
         $.ajax({
@@ -39,8 +41,18 @@ export default {
                 users.value=resp;
             }
         })
+
+        const open_user_profile=(user_id)=>{
+            if(store.state.user.is_login){
+                router.push({name:'userprofile',params:{id:user_id}});
+            }else{
+                router.push({name:'loginview'});
+            }
+        }
+
         return {
-            users
+            users,
+            open_user_profile
         }        
     }
 }
@@ -67,5 +79,10 @@ export default {
     box-shadow: 2px 2px 10px lightgray;
     transform: translateY(-2px);
     transition: 500ms;
+}
+.img-field{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 </style>

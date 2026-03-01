@@ -28,7 +28,7 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/userprofile',
+    path: '/userprofile/:id',
     name: 'userprofile',
     component: UserProfile
   },
